@@ -9,7 +9,7 @@
 	
 	<cfproperty ftSeq="10" ftFieldSet="Dimensions" name="Height" type="numeric" hint="Height of the map" ftRequired="false" ftLabel="Height" ftType="numeric" ftIncludeDecimal="false" />
 	<cfproperty ftSeq="11" ftFieldSet="Dimensions" name="Width" type="numeric" hint="Width of the map" ftRequired="false" ftLabel="Width" ftType="numeric" ftIncludeDecimal="false" />
-
+	<cfproperty ftSeq="12" ftFieldSet="Dimensions" name="Zoom" type="numeric" hint="Zoom level of the map" ftRequired="false" ftLabel="Zoom Level (max 17)" ftType="numeric" ftIncludeDecimal="false" Default="13">
 
 	
 	<!------------------------------------------------------------------------
