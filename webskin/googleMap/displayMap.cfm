@@ -19,13 +19,15 @@
 		<cfset stObj.width = 500 />
 	</cfif>
 
+	<cfif Len(stObj.Zoom)>
+		<cfset zoomLevel = stObj.Zoom>
+	</cfif>
+
 	<cfset oMapLocation = createObject("component", application.types["googleMapLocation"].packagepath) />
 
 		
-		
 	<cfsavecontent variable="mapHeader">
 	<cfoutput>
-		
 	<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=#key#" type="text/javascript"></script>
 	<script type="text/javascript">
    	//<![CDATA[
@@ -67,8 +69,6 @@
 	        	}
 			    else	//a bad or invalid address, use long/lat to generate map
 				{
-				
-						
 						<cfif len(stobj.centerLocationID)>
 							<cfset stMapLocation = oMapLocation.getData(objectid=stobj.centerLocationID) />
 							map.setCenter(new GLatLng(#stMapLocation.longLat#), zoomLevel);
@@ -77,55 +77,42 @@
 							map.setCenter(new GLatLng(#stMapLocation.longLat#), zoomLevel);
 						<cfelse>
 							map.setCenter(new GLatLng(0,0), zoomLevel);
-							
 						</cfif>
 					<!--- window.setTimeout(function() {
 								  map.panTo(new GLatLng(#iLong#, #iLat#));
 								}, 1000); --->
 								
 							
-// Creates a marker at the given point with the given number label
-function createMarker(point, tab) {
-  var marker = new GMarker(point);
-  GEvent.addListener(marker, "click", function() {
-    marker.openInfoWindowHtml(tab);
-  });
-  return marker;
-}
-
-
-	
+						// Creates a marker at the given point with the given number label
+						function createMarker(point, tab) {
+						  var marker = new GMarker(point);
+						  GEvent.addListener(marker, "click", function() {
+						    marker.openInfoWindowHtml(tab);
+						  });
+						  return marker;
+						}
 						<cfset counter = 0 />
 						<cfloop list="#arrayToList(stObj.aLocations)#" index="i">
-	
 							<cfset counter = counter + 1 />
-							
 							<cfset stMapLocation = oMapLocation.getData(objectid=i) />
-							
-
-var point = new GLatLng(#stMapLocation.longLat#);
-  map.addOverlay(createMarker(point, "#JSStringFormat(stMapLocation.label)#"));
-				           
-							
+							var point = new GLatLng(#stMapLocation.longLat#);
+							 map.addOverlay(createMarker(point, "<b>#JSStringFormat(stMapLocation.title)#</b><br />#JSStringFormat(stMapLocation.teaser)#"));
 						</cfloop>
-						
-		
 				}
-		      
 	    	}
-	      
 	    }
-
    	//]]>
    	</script>
 	</cfoutput>
 	</cfsavecontent>
 
 	<cfhtmlhead text="#mapHeader#" />
-	<cfoutput>
-	
-	<div id="map" style="width: 500px; height: 300px">asdf</div><!---   --->
-
+	<cfoutput><div id="map" style="width: #stObj.width#px; height: #stObj.height#px"></div>
+	<script>
+	window.onload = load(); // Add the load function to the window onload
+	// TO DO: the onunload should be in here too, but for some reason at the minute it prevents the map images from being displayed.
+//	window.onunload = GUnload(); // Add the Google maps unload function to the window onunload
+	</script>
 	</cfoutput>
 
 
