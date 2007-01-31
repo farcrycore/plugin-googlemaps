@@ -4,11 +4,11 @@
 
 <tags:objectAdmin 
 	title="Google Map Location" 
-	typename="GoogleMapLocation" 
+	typename="googleMapLocation" 
 	ColumnList="label"
 	SortableColumns="label"
 	lFilterFields="label"
-	sqlorderby="datetimelastUpdated desc" 
-	libraryName="googlemaps" />
+	libraryname="googlemaps"
+	sqlorderby="datetimelastUpdated desc" />
 
 <cfsetting enablecfoutputonly="false">
