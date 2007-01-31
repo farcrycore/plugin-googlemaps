@@ -1,4 +1,5 @@
-<cfcomponent extends="farcry.farcry_core.packages.formtools.string" name="LongLat" displayname="LongLat" hint="Field component to liase with all longlat types"> 
+<cfcomponent extends="farcry.farcry_core.packages.formtools.string" name="LongLat" displayname="LongLat" hint="Extends 'string' to hold longlat coords for Google Maps"> 
+	
 	
 	<cffunction name="init" access="public" returntype="farcry.farcry_lib.googlemaps.packages.formtools.LongLat" output="false" hint="Returns a copy of this initialised object">
 		
@@ -6,7 +7,8 @@
 		
 	</cffunction>
 	
-		<cffunction name="edit" access="public" output="true" returntype="string" hint="his will return a string of formatted HTML text to enable the user to edit the data">
+	
+	<cffunction name="edit" access="public" output="true" returntype="string" hint="his will return a string of formatted HTML text to enable the user to edit the data">
 		<cfargument name="typename" required="true" type="string" hint="The name of the type that this field is part of.">
 		<cfargument name="stObject" required="true" type="struct" hint="The object of the record that this field is part of.">
 		<cfargument name="stMetadata" required="true" type="struct" hint="This is the metadata that is either setup as part of the type.cfc or overridden when calling ft:object by using the stMetadata argument.">
@@ -19,6 +21,7 @@
 		
 		<cfreturn html>
 	</cffunction>
+
 
 	<cffunction name="display" access="public" output="false" returntype="string" hint="This will return a string of formatted HTML text to display.">
 		<cfargument name="typename" required="true" type="string" hint="The name of the type that this field is part of.">
@@ -33,6 +36,7 @@
 		
 		<cfreturn html>
 	</cffunction>
+
 
 	<cffunction name="validate" access="public" output="true" returntype="struct" hint="This will return a struct with bSuccess and stError">
 		<cfargument name="stFieldPost" required="true" type="struct" hint="The fields that are relevent to this field type.">

@@ -9,6 +9,7 @@
 	<div id="content">
 	
 		<h1>#stObj.title#</h1>
+</cfoutput>
 		
 		<cfscript>
 		
@@ -20,6 +21,7 @@
 		
 		</cfscript>
 
+<cfoutput>
 	</div>		
 </cfoutput>
 
