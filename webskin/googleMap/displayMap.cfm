@@ -149,7 +149,7 @@
 					</cfif>
 					
 					var point = new GLatLng(#stMapLocation.longLat#);
-					map.addOverlay(createMarker(point, "#JSStringFormat(sInfoWindow)#"));
+					map.addOverlay(createMarker(point, "#JSStringFormat(trim(sInfoWindow))#"));
 										
 				</cfloop>
 		
