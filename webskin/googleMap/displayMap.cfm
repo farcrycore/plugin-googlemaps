@@ -163,6 +163,11 @@
 	    window.onunload = function(){
 	    	GUnload();
 	    }
+	    
+	    //function to load google maps
+	    window.onload = function(){	
+		    loadGoogleMap();	
+	    }
 
    	//]]>
    	</script>
@@ -177,11 +182,7 @@
 	<cfoutput>
 	
 		<div id="#displayDivId#" style="width: #stObj.width#px; height: #stObj.height#px"></div><!--- html div to display the map --->
-		
-		<script type="text/javascript"><!--- function to load google maps --->
-			window.load(loadGoogleMap());
-		</script>
-
+	
 	</cfoutput>
 
 
