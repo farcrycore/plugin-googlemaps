@@ -39,7 +39,7 @@
 	<cfif NOT len(trim(stObj.width))>
 		<cfset stObj.width = 500 />
 	</cfif>
-	
+
 	
 	<!--- create the map location object which will give us all plot points --->
 	<cfset oMapLocation = createObject("component", application.types["googleMapLocation"].packagepath) />
@@ -60,7 +60,9 @@
 	      		       		
 	      		<cfcase value="large">
 	      			map.addControl(new GLargeMapControl());		//add a large map control to the map
-	      		</cfcase>	 
+	      		</cfcase>	
+	      		
+	      		<cfdefaultcase></cfdefaultcase> 
 	      		
 	      	</cfswitch>
 		
@@ -79,19 +81,20 @@
 	<script type="text/javascript">
    	//<![CDATA[
 		
-		var address = "";	//blank for now
+		var address = null;	//to be used if we are geoCoding
 	    var zoomLevel = #stObj.zoomLevel#;
 	    var map = null;
 	    var geocoder = null;
 	    var bValidAddress = 0;	//default for now
-	    
-	    function loadGoogleMap() 
+	    	    
+
+	    function loadGoogleMap()	//loads a google map
 	    {
 	    
 			if (GBrowserIsCompatible()) 
 	      	{
 	      		
-	      		// Creates a marker at the given point with the given number label
+	      		// Creates a marker at the given point with the given info window onclick
 				function createMarker(point, html) {
 				  var marker = new GMarker(point);
 				  GEvent.addListener(marker, "click", function() {
@@ -101,13 +104,13 @@
 				}
 				
 				var map = new GMap2(document.getElementById("#displayDivId#"));
-				//map controls
+				//map controls as chosen in Farcry
 				#mapControls#
-	        
+				
 	        	if (bValidAddress)	//a valid address was found in the database, use geocoding to generate map
 	        	{
 	        	
-		        	geocoder = new GClientGeocoder();
+		        	<!--- var geocoder = new GClientGeocoder();
 		        	geocoder.getLatLng(address,
 		       			function(point) 
 		       			{
@@ -121,22 +124,12 @@
 					           	marker.openInfoWindowHtml("#JSStringFormat(sInfoWindow)#");
 			         		}
 			       		}
-			       	);
+			       	); --->
 			       	
 	        	}
 			    else	//a bad or invalid address, use long/lat to generate map...not as accurate as geocoding (for Australia anyway)
 				{				
-	
-	
-				// Creates a marker at the given point with the info window onclick
-				function createMarker(point, sInfo) {
-				  var marker = new GMarker(point);
-				  GEvent.addListener(marker, "click", function() {
-				    marker.openInfoWindowHtml(sInfo);
-				  });
-				  return marker;
-				}
-				
+
 				<cfset counter = 0 />
 				<cfloop list="#arrayToList(stObj.aLocations)#" index="i">
 
@@ -144,14 +137,45 @@
 					<cfset stMapLocation = oMapLocation.getData(objectid=i) />
 					<cfset sInfoWindow = oMapLocation.getView(objectid=i,template="displayInfoWindow") />
 					
-					<cfif counter EQ 1>
-						map.setCenter(new GLatLng(#stMapLocation.longLat#), zoomLevel);
-					</cfif>
+					<cfif len(trim(stMapLocation.GeoCode))><!--- there is a physical address...try geocoding to generate the map --->
 					
-					var point = new GLatLng(#stMapLocation.longLat#);
-					map.addOverlay(createMarker(point, "#JSStringFormat(trim(sInfoWindow))#"));
-										
+						address = '#JSStringFormat(trim(stMapLocation.GeoCode))#';	//the address to plot
+						
+						var geocoder = new GClientGeocoder();
+			        	geocoder.getLatLng(address,
+			       			function(point) 
+			       			{
+			       				if (!point) 
+			    	   		   		alert(address + " not found");
+			        	 		else 
+			        	 		{
+									<cfif counter EQ 1>
+										<cfset sCenter = "map.setCenter(point, zoomLevel);" />
+							       	</cfif>
+							       	map.setCenter(point, zoomLevel);
+							       	
+									map.addOverlay(createMarker(point, "#JSStringFormat(trim(sInfoWindow))#"));
+									//map.addOverlay(new GMarker(point));
+				         		}
+				       		}
+				       	);		
+						
+					<cfelseif len(trim(stMapLocation.longLat))><!--- no GeoCode, but there is a long/lat --->
+						
+						<cfif counter EQ 1>
+							<cfset sCenter = "map.setCenter(new GLatLng(#stMapLocation.longLat#), zoomLevel);" />
+						</cfif>
+						map.setCenter(new GLatLng(#stMapLocation.longLat#), zoomLevel);
+						
+						var point = new GLatLng(#stMapLocation.longLat#);
+						map.addOverlay(createMarker(point, "#JSStringFormat(trim(sInfoWindow))#"));
+						//map.addOverlay(new GMarker(point));
+					
+					</cfif>
+
 				</cfloop>
+				
+				#sCenter#
 		
 				}
 		      
