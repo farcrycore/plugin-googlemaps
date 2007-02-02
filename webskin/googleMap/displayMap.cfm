@@ -202,11 +202,9 @@
 	<!--- place the map javascript in the page header --->
 	<cfhtmlhead text="#mapHeader#" />
 	
-	
+	<!--- html div to display the map --->
 	<cfoutput>
-	
-		<div id="#displayDivId#" style="width: #stObj.width#px; height: #stObj.height#px"></div><!--- html div to display the map --->
-	
+		<div id="#displayDivId#" style="width: #stObj.width#px; height: #stObj.height#px"></div>
 	</cfoutput>
 
 
