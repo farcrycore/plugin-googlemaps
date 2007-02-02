@@ -4,19 +4,24 @@
     Created			: January 26, 2007
 	Last Updated	: February 01, 2007
     History			: Initial release (mps 26/01/2007)
-    Purpose			: A typical webskin (where you could add containers etc) for google maps displaying the map and title of the page.
+					: 2/2/2007 MPS: took away coupling to project by removing includes to header/footer files
+    Purpose			: This template will really only be used (in its default state) when you preview from Farcry. 
+					: Map should either be implemented in a container or a tree type in your project
 					: First check to see if at least one location has been plotted for this map, if so then display map
  --->
 <cfsetting enablecfoutputonly="true">
 
 
-<!--- header --->
-<cfmodule template="/farcry/#application.applicationname#/webskin/includes/dmHeader.cfm"
-	layoutClass="type-a"
-	pageTitle="#stObj.title#">
+<cfoutput>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>farcry: farcry - open source</title>
+</head>
 
+<body>
 
-<cfoutput>	
 	<div id="content">
 	
 		<h1>#stObj.title#</h1>
@@ -32,12 +37,11 @@
 	</cfscript>
 
 <cfoutput>
-	</div>		
+	</div>
+	
+</body>
+</html>
 </cfoutput>
-
-
-<!--- footer --->
-<cfmodule template="/farcry/#application.applicationname#/webskin/includes/dmFooter.cfm">
 
 
 <cfsetting enablecfoutputonly="false">
