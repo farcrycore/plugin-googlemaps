@@ -67,7 +67,11 @@
 	      	</cfswitch>
 		
 			<cfif stObj.bOverviewMapControl>
+				<cfif stObj.OverviewWidth GT 0 AND stObj.OverviewHeight GT 0>
 				map.addControl(new GOverviewMapControl(new GSize(#stObj.OverviewWidth#,#stObj.OverviewHeight#)));	//add a small preview to the map
+				<cfelse>
+				map.addControl(new GOverviewMapControl());	//add a small preview to the map
+				</cfif>
 			</cfif>
 		</cfoutput>
 	</cfsavecontent>
