@@ -4,7 +4,8 @@
     Created			: January 26, 2007
 	Last Updated	: February 01, 2007
     History			: Initial release (mps 26/01/2007)
-					: 31/01/2007 - removed dependance of JS functions from the <body> tag, added extra map properties
+					: 31/Jan/2007 - removed dependance of JS functions from the <body> tag, added extra map properties
+					: 05/Feb/2007 - added numberFormat() to remove possible decimal places on numeric database types
     Purpose			: This display handler is responsible for loading/displaying that actual google map. 
 					: Should be called from within another webskin, default example is webskin/googleMap/displayPageStandard.cfm
  --->
@@ -20,27 +21,28 @@
 	<cfparam name="sInfoWindow" default="true" type="string" />
 	<cfparam name="displayDivId" default="map" type="string" /><!--- the name of the div to display the map in, override if 'map' is already being used by your project --->
 	<cfparam name="oMapLocation" default="" />
-	<!--- PARAM STOBJ KEYS --->
-	<cfparam name="stObj.aLocations" default="#arrayNew(1)#" type="array" />
-	<cfparam name="stObj.bMapTypeControl" default="false" type="boolean" />
-	<cfparam name="stObj.bOverviewMapControl" default="false" type="boolean" />
-	<cfparam name="stObj.OverviewWidth" default="150" type="numeric" />
-	<cfparam name="stObj.OverviewHeight" default="150" type="numeric" />
-	<cfparam name="stObj.height" default="" type="numeric" />
-	<cfparam name="stObj.SizeMapControl" default="" type="string" />
-	<cfparam name="stObj.width" default="" type="numeric" />
-	<cfparam name="stObj.zoomLevel" default="13" type="numeric" />
 	
-
+	<cfscript>
+		
+		//these fields are numeric in the database which may have a scale of 2 for example. We don't want decimal points on these values so use numberFormat() to remove them
+		stObj.OverviewWidth = numberFormat(stObj.OverviewWidth);
+		stObj.OverviewHeight = numberFormat(stObj.OverviewHeight);
+		stObj.height = numberFormat(stObj.height);
+		stObj.width = numberFormat(stObj.width);
+		stObj.zoomLevel = numberFormat(stObj.zoomLevel);
+	
+	</cfscript>
+	
+		
 	<!--- if a user hasn't set map dimensions in the webtop, default them --->
 	<cfif NOT len(trim(stObj.height))>
 		<cfset stObj.height = 500 />
-	</cfif>	
+	</cfif>			
 	<cfif NOT len(trim(stObj.width))>
 		<cfset stObj.width = 500 />
-	</cfif>
+	</cfif>	
 
-	
+
 	<!--- create the map location object which will give us all plot points --->
 	<cfset oMapLocation = createObject("component", application.types["googleMapLocation"].packagepath) />
 	
@@ -164,14 +166,14 @@
 				       		}
 				       	);		
 						
-					<cfelseif len(trim(stMapLocation.longLat))><!--- no GeoCode, but there is a long/lat --->
+					<cfelseif len(trim(stMapLocation.latLong))><!--- no GeoCode, but there is a long/lat --->
 						
 						<cfif counter EQ 1>
-							<cfset sCenter = "map.setCenter(new GLatLng(#stMapLocation.longLat#), zoomLevel);" />
+							<cfset sCenter = "map.setCenter(new GLatLng(#stMapLocation.latLong#), zoomLevel);" />
 						</cfif>
-						map.setCenter(new GLatLng(#stMapLocation.longLat#), zoomLevel);
+						map.setCenter(new GLatLng(#stMapLocation.latLong#), zoomLevel);
 						
-						var point = new GLatLng(#stMapLocation.longLat#);
+						var point = new GLatLng(#stMapLocation.latLong#);
 						map.addOverlay(createMarker(point, "#JSStringFormat(trim(sInfoWindow))#"));
 						//map.addOverlay(new GMarker(point));
 					
@@ -205,6 +207,7 @@
 
 	<!--- place the map javascript in the page header --->
 	<cfhtmlhead text="#mapHeader#" />
+	
 	
 	<!--- html div to display the map --->
 	<cfoutput>
