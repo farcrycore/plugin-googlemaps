@@ -10,7 +10,7 @@
 	<cfproperty ftSeq="3" ftFieldSet="Geocoding" name="Geocode" type="longchar" hint="An actual address to use geocoding to render the map" required="false" ftLabel="Physical address" ftType="longchar" />
 	
 	<!--- LONG/LAT --->
-	<cfproperty ftSeq="4" ftFieldSet="Latitude and Longitude" name="LongLat" type="string" hint="Longitude and latitude of the map location" required="false" ftLabel="Latitude and Longitude" ftType="longLat" />
+	<cfproperty ftSeq="4" ftFieldSet="Latitude and Longitude" name="LatLong" type="string" hint="Latitude and longitude of the map location" required="false" ftLabel="Latitude and Longitude" ftType="latLong" />
 
 	<!------------------------------------------------------------------------
 	object methods 
@@ -18,6 +18,3 @@
 
 		
 </cfcomponent>
-
-
-
