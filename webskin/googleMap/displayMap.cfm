@@ -90,12 +90,24 @@
 	      	{
 	      		
 	      		// Creates a marker at the given point with the given info window onclick
-				function createMarker(point, html) {
-				  var marker = new GMarker(point);
+				function createMarker(point, html,icon) {
+					var marker = new GMarker(point,icon);
 				  GEvent.addListener(marker, "click", function() {
 				    marker.openInfoWindowHtml(html);
 				  });
 				  return marker;
+				}
+				
+				// Creates an icon given the URL and height and width of the icon
+				function createIcon(iconurl,iconheight,iconwidth) {
+					var icon = new GIcon();
+					icon.image = iconurl;
+					icon.iconSize = new GSize(iconwidth, iconheight);
+					// anchor the centre of the icon to the point
+					icon.iconAnchor = new GPoint(iconwidth/2,iconheight/2);
+					// anchor the info window to the centre and 1/5 of the way down the icon.
+					icon.infoWindowAnchor = new GPoint(iconwidth/2,iconheight/5);
+					return icon;
 				}
 				
 				var map = new GMap2(document.getElementById("#displayDivId#"));
@@ -131,6 +143,13 @@
 					<cfset counter = counter + 1 />							
 					<cfset stMapLocation = oMapLocation.getData(objectid=i) />
 					<cfset sInfoWindow = oMapLocation.getView(objectid=i,template="displayInfoWindow") />
+					<cfif Len(stMapLocation.Icon)>  // create an icon object for this location.
+						<cfset stIconDetail = StructNew()>
+						<cfset stIconDetail = oMapLocation.getIconDetail(objectID=i)>
+						var thisIcon = createIcon('#stIconDetail.IconURL#',#stIconDetail.height#,#stIconDetail.width#);
+					<cfelse> // or set it to nothing so we use the default icon.
+						var thisIcon = '';
+					</cfif>
 					
 					<cfif len(trim(stMapLocation.GeoCode))><!--- there is a physical address...try geocoding to generate the map --->
 					
@@ -149,7 +168,7 @@
 							       	</cfif>
 							       	map.setCenter(point, zoomLevel);
 							       	
-									map.addOverlay(createMarker(point, "#JSStringFormat(trim(sInfoWindow))#"));
+									map.addOverlay(createMarker(point, "#JSStringFormat(trim(sInfoWindow))#",thisIcon));
 									//map.addOverlay(new GMarker(point));
 				         		}
 				       		}
@@ -163,7 +182,7 @@
 						map.setCenter(new GLatLng(#stMapLocation.latLong#), zoomLevel);
 						
 						var point = new GLatLng(#stMapLocation.latLong#);
-						map.addOverlay(createMarker(point, "#JSStringFormat(trim(sInfoWindow))#"));
+						map.addOverlay(createMarker(point, "#JSStringFormat(trim(sInfoWindow))#",thisIcon));
 						//map.addOverlay(new GMarker(point));
 					
 					</cfif>
