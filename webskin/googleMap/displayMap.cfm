@@ -22,17 +22,6 @@
 	<cfparam name="displayDivId" default="map" type="string" /><!--- the name of the div to display the map in, override if 'map' is already being used by your project --->
 	<cfparam name="oMapLocation" default="" />
 	
-	<cfscript>
-		
-		//these fields are numeric in the database which may have a scale of 2 for example. We don't want decimal points on these values so use numberFormat() to remove them
-		stObj.OverviewWidth = numberFormat(stObj.OverviewWidth);
-		stObj.OverviewHeight = numberFormat(stObj.OverviewHeight);
-		stObj.height = numberFormat(stObj.height);
-		stObj.width = numberFormat(stObj.width);
-		stObj.zoomLevel = numberFormat(stObj.zoomLevel);
-	
-	</cfscript>
-	
 		
 	<!--- if a user hasn't set map dimensions in the webtop, default them --->
 	<cfif NOT len(trim(stObj.height))>
