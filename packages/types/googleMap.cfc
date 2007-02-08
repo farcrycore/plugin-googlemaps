@@ -7,8 +7,8 @@
 	<cfproperty ftSeq="2" ftFieldSet="Locations" name="aLocations" type="array" hint="Different locations to plot on a map content object" ftLabel="Locations" ftType="array" ftJoin="googleMapLocation" ftAllowLibraryEdit="googleMapLocation" />
 	
 	<!--- map dimensions --->
-	<cfproperty ftSeq="10" ftFieldSet="Dimensions" name="Height" type="integer" hint="Height of the map" ftRequired="false" ftLabel="Height" ftType="integer" ftValidation="required,validate-number" />
-	<cfproperty ftSeq="11" ftFieldSet="Dimensions" name="Width" type="integer" hint="Width of the map" ftRequired="false" ftLabel="Width" ftType="integer" ftValidation="required,validate-number" />
+	<cfproperty ftSeq="10" ftFieldSet="Dimensions" name="Width" type="integer" hint="Width of the map" ftRequired="false" ftLabel="Width" ftDefault="400" ftType="integer" ftValidation="required,validate-number" />
+	<cfproperty ftSeq="11" ftFieldSet="Dimensions" name="Height" type="integer" hint="Height of the map" ftRequired="false" ftLabel="Height" ftDefault="400" ftType="integer" ftValidation="required,validate-number" />
 
 	<!------------------------------------------------------------------------
 	GOOGLE MAP OPTIONS
@@ -23,8 +23,8 @@
 
 	<!--- overview map control --->
 	<cfproperty ftSeq="18" ftFieldSet="Overview Map Control" name="bOverviewMapControl" type="boolean" hint="Whether to have the overview map control" ftRequired="false" ftDefault="" ftLabel="Overview Map Control" ftType="boolean" />	
-	<cfproperty ftSeq="19" ftFieldSet="Overview Map Control" name="OverviewWidth" type="integer" hint="Width of the overview map control" ftRequired="false" ftDefault="" ftLabel="Map Control Width" ftType="integer" ftValidation="validate-number" />	
-	<cfproperty ftSeq="20" ftFieldSet="Overview Map Control" name="OverviewHeight" type="integer" hint="Height of the overview map control" ftRequired="false" ftDefault="" ftLabel="Map Control Height" ftType="integer" ftValidation="validate-number" />			
+	<cfproperty ftSeq="19" ftFieldSet="Overview Map Control" name="OverviewWidth" type="integer" default="" hint="Width of the overview map control" ftRequired="false" ftDefault="" ftLabel="Map Control Width" ftType="integer" ftValidation="validate-number" />	
+	<cfproperty ftSeq="20" ftFieldSet="Overview Map Control" name="OverviewHeight" type="integer" default="" hint="Height of the overview map control" ftRequired="false" ftDefault="" ftLabel="Map Control Height" ftType="integer" ftValidation="validate-number" />			
 	
 	<!------------------------------------------------------------------------
 	object methods 
