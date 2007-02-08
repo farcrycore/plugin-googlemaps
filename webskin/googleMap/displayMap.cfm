@@ -42,21 +42,21 @@
 			<cfif stObj.bMapTypeControl>
 				map.addControl(new GMapTypeControl());		//load the map control (hybrid/satellite/map)
 			</cfif>
-	      	
+
 	      	<cfswitch expression="#stObj.SizeMapControl#">
-	      	
+
 	      		<cfcase value="small">
-	      			map.addControl(new GSmallMapControl());		//add a small map control to the map
+					map.addControl(new GSmallMapControl());		//add a small map control to the map
 	      		</cfcase>	 
-	      		       		
+
 	      		<cfcase value="large">
-	      			map.addControl(new GLargeMapControl());		//add a large map control to the map
+					map.addControl(new GLargeMapControl());		//add a large map control to the map
 	      		</cfcase>	
-	      		
+
 	      		<cfdefaultcase></cfdefaultcase> 
-	      		
+
 	      	</cfswitch>
-		
+
 			<cfif stObj.bOverviewMapControl>
 				<cfif stObj.OverviewWidth GT 0 AND stObj.OverviewHeight GT 0>
 				map.addControl(new GOverviewMapControl(new GSize(#stObj.OverviewWidth#,#stObj.OverviewHeight#)));	//add a small preview to the map
@@ -75,29 +75,28 @@
 	<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=#key#" type="text/javascript"></script>
 	<script type="text/javascript">
    	//<![CDATA[
-		
-		var address = null;	//to be used if we are geoCoding
-	    var zoomLevel = #stObj.zoomLevel#;
-	    var map = null;
-	    var geocoder = null;
-	    var bValidAddress = 0;	//default for now
-	    	    
 
-	    function loadGoogleMap()	//loads a google map
-	    {
-	    
-			if (GBrowserIsCompatible()) 
-	      	{
-	      		
-	      		// Creates a marker at the given point with the given info window onclick
+		var address = null;	//to be used if we are geoCoding
+		var zoomLevel = #stObj.zoomLevel#;
+		var map = null;
+		var geocoder = null;
+
+
+		function loadGoogleMap()	//loads a google map
+		{
+
+			if (GBrowserIsCompatible())
+			{
+
+				// Creates a marker at the given point with the given info window onclick
 				function createMarker(point, html,icon) {
 					var marker = new GMarker(point,icon);
-				  GEvent.addListener(marker, "click", function() {
-				    marker.openInfoWindowHtml(html);
-				  });
-				  return marker;
+					GEvent.addListener(marker, "click", function() {
+					marker.openInfoWindowHtml(html);
+					});
+					return marker;
 				}
-				
+
 				// Creates an icon given the URL and height and width of the icon
 				function createIcon(iconurl,iconheight,iconwidth) {
 					var icon = new GIcon();
@@ -114,29 +113,6 @@
 				//map controls as chosen in Farcry
 				#mapControls#
 				
-	        	if (bValidAddress)	//a valid address was found in the database, use geocoding to generate map
-	        	{
-	        	
-		        	<!--- var geocoder = new GClientGeocoder();
-		        	geocoder.getLatLng(address,
-		       			function(point) 
-		       			{
-		       				if (!point) 
-		    	   		   		alert(address + " not found");
-		        	 		else 
-		        	 		{
-					           	map.setCenter(point, zoomLevel);
-					           	var marker = new GMarker(point);
-					           	map.addOverlay(marker);
-					           	marker.openInfoWindowHtml("#JSStringFormat(sInfoWindow)#");
-			         		}
-			       		}
-			       	); --->
-			       	
-	        	}
-			    else	//a bad or invalid address, use long/lat to generate map...not as accurate as geocoding (for Australia anyway)
-				{				
-
 				<cfset counter = 0 />
 				<cfloop list="#arrayToList(stObj.aLocations)#" index="i">
 
@@ -152,11 +128,11 @@
 					</cfif>
 					
 					<cfif len(trim(stMapLocation.GeoCode))><!--- there is a physical address...try geocoding to generate the map --->
-					
+
 						address = '#JSStringFormat(trim(stMapLocation.GeoCode))#';	//the address to plot
-						
+
 						var geocoder = new GClientGeocoder();
-			        	geocoder.getLatLng(address,
+						geocoder.getLatLng(address,
 			       			function(point) 
 			       			{
 			       				if (!point) 
@@ -188,15 +164,13 @@
 					</cfif>
 
 				</cfloop>
-				
-				#sCenter#
-		
-				}
-		      
-	    	}
 
+				#sCenter#
+
+			}
 	    }
-	    
+
+
 	    //using onunload() to prevent memory leaks especially in IE
 	    window.onunload = function(){
 	    	GUnload();
