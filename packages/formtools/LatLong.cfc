@@ -1,4 +1,4 @@
-<cfcomponent extends="farcry.farcry_core.packages.formtools.string" name="LatLong" displayname="LatLong" hint="Extends 'string' to hold latLong coords for Google Maps"> 
+<cfcomponent extends="farcry.core.packages.formtools.string" name="LatLong" displayname="LatLong" hint="Extends 'string' to hold latLong coords for Google Maps"> 
 	
 	
 	<cffunction name="init" access="public" returntype="farcry.farcry_lib.googlemaps.packages.formtools.LatLong" output="false" hint="Returns a copy of this initialised object">

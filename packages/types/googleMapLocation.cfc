@@ -1,4 +1,4 @@
-<cfcomponent extends="farcry.farcry_core.packages.types.types" displayName="Google Map Location" hint="Google Map Location" bFriendly="1" bobjectbroker="true" objectbrokermaxobjects="1000">
+<cfcomponent extends="farcry.core.packages.types.types" displayName="Google Map Location" hint="Google Map Location" bFriendly="1" bobjectbroker="true" objectbrokermaxobjects="1000">
 	
 	<!------------------------------------------------------------------------
 	type properties
