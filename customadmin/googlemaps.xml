@@ -3,8 +3,8 @@
 	<section mergeType="merge" id="googlemapsSection" label="Google Maps" labelType="value">
 		<subsection mergeType="merge" id="googlemapsSubSection" label="Google Maps" labelType="value">
 			<menu mergeType="merge" id="googlemapsMenu" label="Google Maps" labelType="value">
-				<menuitem mergeType="merge" id="googleMaps" label="Google Maps" link="/admin/customadmin.cfm?module=customlists/googleMap.cfm&amp;lib=googlemaps" />
-				<menuitem mergeType="merge" id="googleMapsLocation" label="Google Maps Location" link="/admin/customadmin.cfm?module=customlists/googleMapLocation.cfm&amp;lib=googlemaps" />
+				<menuitem mergeType="merge" id="googleMaps" label="Google Maps" link="/admin/customadmin.cfm?module=customlists/googleMap.cfm&amp;plugin=googlemaps" />
+				<menuitem mergeType="merge" id="googleMapsLocation" label="Google Maps Location" link="/admin/customadmin.cfm?module=customlists/googleMapLocation.cfm&amp;plugin=googlemaps" />
 			</menu>
 		</subsection>
 	</section>
