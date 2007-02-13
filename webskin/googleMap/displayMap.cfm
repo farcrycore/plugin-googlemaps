@@ -114,6 +114,7 @@
 				#mapControls#
 				
 				<cfset counter = 0 />
+				<cfset sCenter = "" />
 				<cfloop list="#arrayToList(stObj.aLocations)#" index="i">
 
 					<cfset counter = counter + 1 />							
