@@ -1,4 +1,3 @@
-<cfsetting enablecfoutputonly="true">
 <!--- 
     Name			: displayPageStandard.cfm
     Author			: Matthew Bryant, Michael Sharman
@@ -10,7 +9,8 @@
 					: Map should either be implemented in a container or a tree type in your project
 					: First check to see if at least one location has been plotted for this map, if so then display map
  --->
-<!--- @@displayname: Standard Page display --->
+<cfsetting enablecfoutputonly="true">
+
 
 <cfoutput>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -42,4 +42,6 @@
 </body>
 </html>
 </cfoutput>
+
+
 <cfsetting enablecfoutputonly="false">
