@@ -8,7 +8,7 @@
 	ColumnList="label"
 	SortableColumns="label"
 	lFilterFields="label"
-	libraryname="googlemaps"
+	plugin="googlemaps"
 	sqlorderby="datetimelastUpdated desc" />
 
 <cfsetting enablecfoutputonly="false">

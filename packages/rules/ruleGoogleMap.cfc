@@ -6,7 +6,7 @@
 <cffunction name="execute" hint="Displays the text rule on the page." output="true" returntype="void" access="public">
 	<cfargument name="objectID" required="Yes" type="uuid" default="">
 	<cfset var stObj = getData(arguments.objectid) />
-	<cfset var oGMap = createObject("component","farcry.farcry_lib.googlemaps.packages.types.googlemap") />
+	<cfset var oGMap = createObject("component","farcry.plugins.googlemaps.packages.types.googlemap") />
 	<cfset var stData = oGMap.getData(stObj.MapID) /> 
 	<cfset var stInvoke = structNew() />
 	
