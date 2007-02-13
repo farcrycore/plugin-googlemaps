@@ -1,6 +1,6 @@
 <cfsetting enablecfoutputonly="true">
 
-<cfimport taglib="/farcry/farcry_core/tags/formtools" prefix="tags">
+<cfimport taglib="/farcry/core/tags/formtools" prefix="tags">
 
 <tags:objectAdmin 
 	title="Google Map Location" 

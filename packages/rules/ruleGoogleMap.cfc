@@ -1,4 +1,4 @@
-<cfcomponent displayname="Google maps rule" extends="farcry.farcry_core.packages.rules.rules"
+<cfcomponent displayname="Google maps rule" extends="farcry.core.packages.rules.rules"
 			hint="Allows you to select a map from the library of Gogle Maps defined for your application.">
 	<cfproperty ftSeq="1" ftFieldSet="Maps" name="intro" type="longchar" hint="Introduction HTML for map." ftLabel="Intro" ftType="longchar" />
 	<cfproperty ftSeq="2" ftFieldSet="Maps" name="MapID" type="UUID" hint="ID of the map to be displayed" ftLabel="Map" ftType="UUID" ftJoin="googleMap" />
