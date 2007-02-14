@@ -12,6 +12,12 @@
 <cfsetting enablecfoutputonly="true">
 
 
+
+<!--- Import tag libraries --->
+<cfimport taglib="/farcry/core/tags/webskin/" prefix="skin" />
+
+
+
 	<!--- the apiKey should be set in your project _serverSpecificVars.cfm --->
 	<cfparam name="application.farcrylib.googlemaps.apiKey" default="" type="string" />
 	<cfparam name="key" default="#application.farcrylib.googlemaps.apiKey#" type="string" />
@@ -67,12 +73,16 @@
 		</cfoutput>
 	</cfsavecontent>
 
+
+	<!--- We only want to place the google maps js file once in the header. This wll allow for 2 maps to be placed on the 1 page. --->
+	<skin:htmlhead id="googleMapJS#key#">
+		<cfoutput><script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=#key#" type="text/javascript"></script></cfoutput>
+	</skin:htmlhead>
 	
-	<!--- generate the map javascript --->		
-	<cfsavecontent variable="mapHeader">
-	<cfoutput>
-		
-	<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=#key#" type="text/javascript"></script>
+	<!--- generate the map javascript and place the map javascript in the page header ---> 
+	
+	<skin:htmlhead>
+	<cfoutput>			
 	<script type="text/javascript">
    	//<![CDATA[
 
@@ -184,12 +194,14 @@
 
    	//]]>
    	</script>
+	
 	</cfoutput>
-	</cfsavecontent>
+	</skin:htmlhead>
 	
 
-	<!--- place the map javascript in the page header --->
-	<cfhtmlhead text="#mapHeader#" />
+	
+	
+	
 	
 	
 	<!--- html div to display the map --->
