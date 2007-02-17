@@ -1,8 +1,11 @@
-<cfsetting enablecfoutputonly="true">
+<cfsetting enablecfoutputonly="true" />
+<cfimport taglib="/farcry/core/tags/admin" prefix="admin" />
+<cfimport taglib="/farcry/core/tags/formtools" prefix="ft" />
 
-<cfimport taglib="/farcry/core/tags/formtools" prefix="tags">
+<!--- set up page header --->
+<admin:header title="Google Map" />
 
-<tags:objectAdmin 
+<ft:objectAdmin 
 	title="Google Maps" 
 	typename="googleMap" 
 	ColumnList="label"
@@ -11,4 +14,7 @@
 	plugin="googlemaps"
 	sqlorderby="datetimelastUpdated desc" />
 
-<cfsetting enablecfoutputonly="false">
+<!--- setup footer --->
+<admin:footer />
+
+<cfsetting enablecfoutputonly="false" />
