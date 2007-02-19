@@ -19,8 +19,8 @@
 
 
 	<!--- the apiKey should be set in your project _serverSpecificVars.cfm --->
-	<cfparam name="application.farcrylib.googlemaps.apiKey" default="" type="string" />
-	<cfparam name="key" default="#application.farcrylib.googlemaps.apiKey#" type="string" />
+	<cfparam name="application.stplugins.googlemaps.apiKey" default="" type="string" />
+	<cfparam name="key" default="#application.stplugins.googlemaps.apiKey#" type="string" />
 	<cfparam name="mapControls" default="" type="string" />
 	<cfparam name="mapHeader" default="" type="string" />
 	<cfparam name="bValidAddress" default="true" type="boolean" /><!--- to be used when we have geocoding in place --->
