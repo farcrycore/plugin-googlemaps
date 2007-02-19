@@ -5,7 +5,7 @@
 <!--- set up page header --->
 <admin:header title="Google Map Locations" />
 
-<tags:objectAdmin 
+<ft:objectAdmin 
 	title="Google Map Location" 
 	typename="googleMapLocation" 
 	ColumnList="label"
