@@ -18,7 +18,7 @@
 
 
 
-	<!--- the apiKey should be set in your project _serverSpecificVars.cfm --->
+	<!--- the apiKey should be set in your project _serverSpecificRequestScope.cfm --->
 	<cfparam name="application.stplugins.googlemaps.apiKey" default="" type="string" />
 	<cfparam name="key" default="#application.stplugins.googlemaps.apiKey#" type="string" />
 	<cfparam name="mapControls" default="" type="string" />
@@ -122,6 +122,7 @@
 				var map = new GMap2(document.getElementById("#displayDivId#"));
 				//map controls as chosen in Farcry
 				#mapControls#
+				</cfoutput>
 				
 				<cfset counter = 0 />
 				<cfset sCenter = "" />
@@ -133,13 +134,14 @@
 					<cfif Len(stMapLocation.Icon)>  // create an icon object for this location.
 						<cfset stIconDetail = StructNew()>
 						<cfset stIconDetail = oMapLocation.getIconDetail(objectID=i)>
-						var thisIcon = createIcon('#stIconDetail.IconURL#',#stIconDetail.height#,#stIconDetail.width#);
+						<cfoutput>var thisIcon = createIcon('#stIconDetail.IconURL#',#stIconDetail.height#,#stIconDetail.width#);</cfoutput>
 					<cfelse> // or set it to nothing so we use the default icon.
-						var thisIcon = '';
+						<cfoutput>var thisIcon = '';</cfoutput>
 					</cfif>
 					
 					<cfif len(trim(stMapLocation.GeoCode))><!--- there is a physical address...try geocoding to generate the map --->
-
+						
+						<cfoutput>
 						address = '#JSStringFormat(trim(stMapLocation.GeoCode))#';	//the address to plot
 
 						var geocoder = new GClientGeocoder();
@@ -160,22 +162,26 @@
 				         		}
 				       		}
 				       	);		
+						</cfoutput>
 						
 					<cfelseif len(trim(stMapLocation.latLong))><!--- no GeoCode, but there is a long/lat --->
 						
 						<cfif counter EQ 1>
 							<cfset sCenter = "map.setCenter(new GLatLng(#stMapLocation.latLong#), zoomLevel);" />
 						</cfif>
+						<cfoutput>
 						map.setCenter(new GLatLng(#stMapLocation.latLong#), zoomLevel);
 						
 						var point = new GLatLng(#stMapLocation.latLong#);
 						map.addOverlay(createMarker(point, "#JSStringFormat(trim(sInfoWindow))#",thisIcon));
 						//map.addOverlay(new GMarker(point));
-					
+						</cfoutput>
+						
 					</cfif>
 
 				</cfloop>
-
+		
+		<cfoutput>
 				#sCenter#
 
 			}
