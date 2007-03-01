@@ -29,6 +29,11 @@
 	<cfparam name="oMapLocation" default="" />
 	
 		
+	<cfparam name="arguments.stparam" default="#structNew()#" />
+	
+
+	
+	
 	<!--- if a user hasn't set map dimensions in the webtop, default them --->
 	<cfif NOT len(trim(stObj.height))>
 		<cfset stObj.height = 500 />
@@ -124,6 +129,36 @@
 				#mapControls#
 				</cfoutput>
 				
+				<cfset counter = 0 />
+				<cfif structKeyExists(arguments.stParam, "aLocations") >
+					<cfloop from="1" to="#arrayLen(arguments.stParam.aLocations)#" index="i">
+						<cfoutput>
+						var thisIcon = '';
+						
+						address = '#JSStringFormat(trim(arguments.stParam.aLocations[i]))#';	//the address to plot
+
+						var geocoder = new GClientGeocoder();
+						geocoder.getLatLng(address,
+			       			function(point) 
+			       			{
+			       				if (!point) 
+			    	   		   		alert(address + " not found");
+			        	 		else 
+			        	 		{
+									
+							       	map.setCenter(point, zoomLevel);
+							       	
+									map.addOverlay(createMarker(point, "#JSStringFormat(trim('this is the info window'))#",thisIcon));
+									//map.addOverlay(new GMarker(point));
+				         		}
+				       		}
+				       	);		
+						</cfoutput>
+					</cfloop>
+				</cfif>
+	
+	
+	
 				<cfset counter = 0 />
 				<cfset sCenter = "" />
 				<cfloop list="#arrayToList(stObj.aLocations)#" index="i">
