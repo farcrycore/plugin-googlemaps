@@ -22,7 +22,7 @@
 	<cfproperty ftSeq="17" ftFieldSet="Map Control Size / Zoom" name="zoomLevel" type="integer" hint="The default zoom level of the map" ftRequired="false" ftDefault="13" ftLabel="Zoom Level" ftType="list" ftList="1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16" ftRenderType="dropdown" />
 
 	<!--- overview map control --->
-	<cfproperty ftSeq="18" ftFieldSet="Overview Map Control" name="bOverviewMapControl" type="boolean" hint="Whether to have the overview map control" ftRequired="false" ftDefault="" ftLabel="Overview Map Control" ftType="boolean" />	
+	<cfproperty ftSeq="18" ftFieldSet="Overview Map Control" name="bOverviewMapControl" type="boolean" hint="Whether to have the overview map control" ftRequired="false" ftDefault="1" ftLabel="Overview Map Control" ftType="boolean" />	
 	<cfproperty ftSeq="19" ftFieldSet="Overview Map Control" name="overviewWidth" type="integer" hint="Width of the overview map control" ftRequired="false" ftDefault="100" ftLabel="Map Control Width" ftType="integer" ftValidation="validate-number" />	
 	<cfproperty ftSeq="20" ftFieldSet="Overview Map Control" name="overviewHeight" type="integer" hint="Height of the overview map control" ftRequired="false" ftDefault="100" ftLabel="Map Control Height" ftType="integer" ftValidation="validate-number" />			
 	
