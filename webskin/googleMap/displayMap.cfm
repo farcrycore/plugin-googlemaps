@@ -129,43 +129,96 @@
 				#mapControls#
 				</cfoutput>
 				
-				<cfset counter = 0 />
+				
+	
+				<cfset counter = 0 /><!--- used to determine if it is the first location to plot. The first location will be set to the center point of the map --->
+				<cfset sCenter = "" /><!--- This variable will hold the javascript code to plot the centre point --->			
+				
+				
 				<cfif structKeyExists(arguments.stParam, "aLocations") >
 					<cfloop from="1" to="#arrayLen(arguments.stParam.aLocations)#" index="i">
-						<cfoutput>
-						var thisIcon = '';
 						
-						address = '#JSStringFormat(trim(arguments.stParam.aLocations[i]))#';	//the address to plot
+						
+						<cfset counter = counter + 1 />	
+						
+						<cfif not isStruct(arguments.stParam.aLocations[i])>
+							<cfset stMapLocation = structNew() />
+							<cfset stMapLocation.title = arguments.stParam.aLocations[i] />
+							<cfset stMapLocation.teaser = arguments.stParam.aLocations[i] />
+							<cfset stMapLocation.geoCode = arguments.stParam.aLocations[i] />
+							<cfset stMapLocation.latLong = "" />
+							<cfset stMapLocation.icon = "" />
+							<cfset stMapLocation.iconURL = "" />
+						<cfelse>
+							<cfset stMapLocation = arguments.stParam.aLocations[i] />
+						</cfif>
+						<cfif NOT structKeyExists(stMapLocation, "teaser") OR NOT len(stMapLocation.teaser)>
+							<cfset stMapLocation.teaser = stMapLocation.geoCode />
+						</cfif>
+						
+						<cfif isDefined("stMapLocation.iconURL") and len(stMaplocation.iconURL)>
+							<cfoutput>var thisIcon = '#stMapLocation.iconURL#';</cfoutput>
+						<cfelseif isDefined("stMapLocation.icon") and Len(stMapLocation.Icon)>  // create an icon object for this location.
+							<cfset stIconDetail = StructNew()>
+							<cfset stIconDetail = oMapLocation.getIconDetail(objectID=i)>
+							<cfoutput>var thisIcon = createIcon('#stIconDetail.IconURL#',#stIconDetail.height#,#stIconDetail.width#);</cfoutput>
+						<cfelse> // or set it to nothing so we use the default icon.
+							<cfoutput>var thisIcon = '';</cfoutput>
+						</cfif>
+						
+						<cfif isDefined("stMapLocation.GeoCode") and len(trim(stMapLocation.GeoCode))><!--- there is a physical address...try geocoding to generate the map --->
+							
+							<cfoutput>
+							address = '#JSStringFormat(trim(stMapLocation.GeoCode))#';	//the address to plot
+	
+							var geocoder = new GClientGeocoder();
+							geocoder.getLatLng(address,
+				       			function(point) 
+				       			{
+				       				if (!point) 
+				    	   		   		alert(address + " not found");
+				        	 		else 
+				        	 		{
+										<cfif counter EQ 1>
+											<cfset sCenter = "map.setCenter(point, zoomLevel);" />
+								       	</cfif>
+								       	map.setCenter(point, zoomLevel);
+								       	
+										map.addOverlay(createMarker(point, "#JSStringFormat(trim(stMapLocation.teaser))#",thisIcon));
+										//map.addOverlay(new GMarker(point));
+					         		}
+					       		}
+					       	);		
+							</cfoutput>
+							
+						<cfelseif len(trim(stMapLocation.latLong))><!--- no GeoCode, but there is a long/lat --->
+							
+							<cfif counter EQ 1>
+								<cfset sCenter = "map.setCenter(new GLatLng(#stMapLocation.latLong#), zoomLevel);" />
+							</cfif>
+							<cfoutput>
+							map.setCenter(new GLatLng(#stMapLocation.latLong#), zoomLevel);
+							
+							var point = new GLatLng(#stMapLocation.latLong#);
+							map.addOverlay(createMarker(point, "#JSStringFormat(trim(sInfoWindow))#",thisIcon));
+							//map.addOverlay(new GMarker(point));
+							</cfoutput>
+							
+						</cfif>
+						
 
-						var geocoder = new GClientGeocoder();
-						geocoder.getLatLng(address,
-			       			function(point) 
-			       			{
-			       				if (!point) 
-			    	   		   		alert(address + " not found");
-			        	 		else 
-			        	 		{
-									
-							       	map.setCenter(point, zoomLevel);
-							       	
-									map.addOverlay(createMarker(point, "#JSStringFormat(trim('this is the info window'))#",thisIcon));
-									//map.addOverlay(new GMarker(point));
-				         		}
-				       		}
-				       	);		
-						</cfoutput>
 					</cfloop>
 				</cfif>
 	
 	
-	
-				<cfset counter = 0 />
-				<cfset sCenter = "" />
 				<cfloop list="#arrayToList(stObj.aLocations)#" index="i">
 
 					<cfset counter = counter + 1 />							
 					<cfset stMapLocation = oMapLocation.getData(objectid=i) />
-					<cfset sInfoWindow = oMapLocation.getView(objectid=i,template="displayInfoWindow") />
+					
+					
+					<!--- If the webskin for the infoWindow does not exist, then we use the teaser --->
+					<cfset sInfoWindow = oMapLocation.getView(objectid=i,template="displayInfoWindow", alternateHTML="#stMapLocation.teaser#") />
 					<cfif Len(stMapLocation.Icon)>  // create an icon object for this location.
 						<cfset stIconDetail = StructNew()>
 						<cfset stIconDetail = oMapLocation.getIconDetail(objectID=i)>
@@ -190,9 +243,14 @@
 									<cfif counter EQ 1>
 										<cfset sCenter = "map.setCenter(point, zoomLevel);" />
 							       	</cfif>
-							       	map.setCenter(point, zoomLevel);
+							       	//map.setCenter(point, zoomLevel);
 							       	
-									map.addOverlay(createMarker(point, "#JSStringFormat(trim(sInfoWindow))#",thisIcon));
+							       	<cfif len(sInfoWindow)>
+							       		map.addOverlay(createMarker(point, "#JSStringFormat(trim(sInfoWindow))#",thisIcon));
+							       	<cfelse>
+							       		map.addOverlay(createMarker(point, "",thisIcon));
+							       	</cfif>
+									
 									//map.addOverlay(new GMarker(point));
 				         		}
 				       		}
@@ -205,10 +263,16 @@
 							<cfset sCenter = "map.setCenter(new GLatLng(#stMapLocation.latLong#), zoomLevel);" />
 						</cfif>
 						<cfoutput>
-						map.setCenter(new GLatLng(#stMapLocation.latLong#), zoomLevel);
+						//map.setCenter(new GLatLng(#stMapLocation.latLong#), zoomLevel);
 						
 						var point = new GLatLng(#stMapLocation.latLong#);
-						map.addOverlay(createMarker(point, "#JSStringFormat(trim(sInfoWindow))#",thisIcon));
+						
+				       	<cfif len(sInfoWindow)>
+				       		map.addOverlay(createMarker(point, "#JSStringFormat(trim(sInfoWindow))#",thisIcon));
+				       	<cfelse>
+				       		map.addOverlay(createMarker(point, "",thisIcon));
+				       	</cfif>
+						
 						//map.addOverlay(new GMarker(point));
 						</cfoutput>
 						
