@@ -127,6 +127,7 @@
 				var map = new GMap2(document.getElementById("#displayDivId#"));
 				//map controls as chosen in Farcry
 				#mapControls#
+	
 				</cfoutput>
 				
 				
@@ -136,6 +137,7 @@
 				
 				
 				<cfif structKeyExists(arguments.stParam, "aLocations") >
+					
 					<cfloop from="1" to="#arrayLen(arguments.stParam.aLocations)#" index="i">
 						
 						
@@ -208,79 +210,89 @@
 						
 
 					</cfloop>
+					
 				</cfif>
 	
+				<cfif arrayLen(stobj.aLocations)>
+					
+					
+				
+					<cfloop list="#arrayToList(stObj.aLocations)#" index="i">
 	
-				<cfloop list="#arrayToList(stObj.aLocations)#" index="i">
-
-					<cfset counter = counter + 1 />							
-					<cfset stMapLocation = oMapLocation.getData(objectid=i) />
-					
-					
-					<!--- If the webskin for the infoWindow does not exist, then we use the teaser --->
-					<cfset sInfoWindow = oMapLocation.getView(objectid=i,template="displayInfoWindow", alternateHTML="#stMapLocation.teaser#") />
-					<cfif Len(stMapLocation.Icon)>  // create an icon object for this location.
-						<cfset stIconDetail = StructNew()>
-						<cfset stIconDetail = oMapLocation.getIconDetail(objectID=i)>
-						<cfoutput>var thisIcon = createIcon('#stIconDetail.IconURL#',#stIconDetail.height#,#stIconDetail.width#);</cfoutput>
-					<cfelse> // or set it to nothing so we use the default icon.
-						<cfoutput>var thisIcon = '';</cfoutput>
-					</cfif>
-					
-					<cfif len(trim(stMapLocation.GeoCode))><!--- there is a physical address...try geocoding to generate the map --->
+						<cfset counter = counter + 1 />							
+						<cfset stMapLocation = oMapLocation.getData(objectid=i) />
 						
-						<cfoutput>
-						address = '#JSStringFormat(trim(stMapLocation.GeoCode))#';	//the address to plot
-
-						var geocoder = new GClientGeocoder();
-						geocoder.getLatLng(address,
-			       			function(point) 
-			       			{
-			       				if (!point) 
-			    	   		   		alert(address + " not found");
-			        	 		else 
-			        	 		{
-									<cfif counter EQ 1>
-										<cfset sCenter = "map.setCenter(point, zoomLevel);" />
-							       	</cfif>
-							       	//map.setCenter(point, zoomLevel);
-							       	
-							       	<cfif len(sInfoWindow)>
-							       		map.addOverlay(createMarker(point, "#JSStringFormat(trim(sInfoWindow))#",thisIcon));
-							       	<cfelse>
-							       		map.addOverlay(createMarker(point, "",thisIcon));
-							       	</cfif>
-									
-									//map.addOverlay(new GMarker(point));
-				         		}
-				       		}
-				       	);		
-						</cfoutput>
 						
-					<cfelseif len(trim(stMapLocation.latLong))><!--- no GeoCode, but there is a long/lat --->
-						
-						<cfif counter EQ 1>
-							<cfset sCenter = "map.setCenter(new GLatLng(#stMapLocation.latLong#), zoomLevel);" />
+						<!--- If the webskin for the infoWindow does not exist, then we use the teaser --->
+						<cfset sInfoWindow = oMapLocation.getView(objectid=i,template="displayInfoWindow", alternateHTML="#stMapLocation.teaser#") />
+						<cfif Len(stMapLocation.Icon)>  // create an icon object for this location.
+							<cfset stIconDetail = StructNew()>
+							<cfset stIconDetail = oMapLocation.getIconDetail(objectID=i)>
+							<cfoutput>var thisIcon = createIcon('#stIconDetail.IconURL#',#stIconDetail.height#,#stIconDetail.width#);</cfoutput>
+						<cfelse> // or set it to nothing so we use the default icon.
+							<cfoutput>var thisIcon = '';</cfoutput>
 						</cfif>
-						<cfoutput>
-						//map.setCenter(new GLatLng(#stMapLocation.latLong#), zoomLevel);
 						
-						var point = new GLatLng(#stMapLocation.latLong#);
-						
-				       	<cfif len(sInfoWindow)>
-				       		map.addOverlay(createMarker(point, "#JSStringFormat(trim(sInfoWindow))#",thisIcon));
-				       	<cfelse>
-				       		map.addOverlay(createMarker(point, "",thisIcon));
-				       	</cfif>
-						
-						//map.addOverlay(new GMarker(point));
-						</cfoutput>
-						
-					</cfif>
-
-				</cfloop>
-		
+						<cfif len(trim(stMapLocation.GeoCode))><!--- there is a physical address...try geocoding to generate the map --->
+							
+							<cfoutput>
+							address = '#JSStringFormat(trim(stMapLocation.GeoCode))#';	//the address to plot
+	
+							var geocoder = new GClientGeocoder();
+							geocoder.getLatLng(address,
+				       			function(point) 
+				       			{
+				       				if (!point) 
+				    	   		   		alert(address + " not found");
+				        	 		else 
+				        	 		{
+										<cfif counter EQ 1>
+											<cfset sCenter = "map.setCenter(point, zoomLevel);" />
+								       	</cfif>
+								       	map.setCenter(point, zoomLevel);
+								       	
+								       	<cfif len(sInfoWindow)>
+								       		map.addOverlay(createMarker(point, "#JSStringFormat(trim(sInfoWindow))#",thisIcon));
+								       	<cfelse>
+								       		map.addOverlay(createMarker(point, "",thisIcon));
+								       	</cfif>
+										
+										//map.addOverlay(new GMarker(point));
+					         		}
+					       		}
+					       	);		
+							</cfoutput>
+							
+						<cfelseif len(trim(stMapLocation.latLong))><!--- no GeoCode, but there is a long/lat --->
+							
+							<cfif counter EQ 1>
+								<cfset sCenter = "map.setCenter(new GLatLng(#stMapLocation.latLong#), zoomLevel);" />
+							</cfif>
+							<cfoutput>
+							map.setCenter(new GLatLng(#stMapLocation.latLong#), zoomLevel);
+							
+							var point = new GLatLng(#stMapLocation.latLong#);
+							
+					       	<cfif len(sInfoWindow)>
+					       		map.addOverlay(createMarker(point, "#JSStringFormat(trim(sInfoWindow))#",thisIcon));
+					       	<cfelse>
+					       		map.addOverlay(createMarker(point, "",thisIcon));
+					       	</cfif>
+							
+							//map.addOverlay(new GMarker(point));
+							</cfoutput>
+							
+						</cfif>
+	
+					</cfloop>
+					
+					
+					
+				</cfif>
+				
+				
 		<cfoutput>
+		
 				#sCenter#
 
 			}
@@ -303,8 +315,7 @@
 	</cfoutput>
 	</skin:htmlhead>
 	
-
-	
+		
 	
 	
 	
