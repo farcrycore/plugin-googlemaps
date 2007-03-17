@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <webtop>
-	<section mergeType="merge" id="googlemapsSection" label="Google Maps" labelType="value">
+	<section mergeType="merge" id="plugins" label="Plugins" labelType="value">
 		<subsection mergeType="merge" id="googlemapsSubSection" label="Google Maps" labelType="value">
 			<menu mergeType="merge" id="googlemapsMenu" label="Google Maps" labelType="value">
 				<menuitem mergeType="merge" id="googleMaps" label="Google Maps" link="/admin/customadmin.cfm?module=customlists/googleMap.cfm&amp;plugin=googlemaps" />
