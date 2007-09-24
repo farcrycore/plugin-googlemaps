@@ -20,7 +20,9 @@
 
 	<!--- the apiKey should be set in your project _serverSpecificRequestScope.cfm --->
 	<cfparam name="application.stplugins.googlemaps.apiKey" default="" type="string" />
-	<cfparam name="key" default="#application.stplugins.googlemaps.apiKey#" type="string" />
+	<cfparam name="application.stplugins.googlemaps.stKeys" default="#structNew()#" type="struct" />
+	
+	<cfparam name="key" default="" type="string" />
 	<cfparam name="mapControls" default="" type="string" />
 	<cfparam name="mapHeader" default="" type="string" />
 	<cfparam name="bValidAddress" default="true" type="boolean" /><!--- to be used when we have geocoding in place --->
@@ -31,7 +33,13 @@
 		
 	<cfparam name="arguments.stparam" default="#structNew()#" />
 	
-
+	<cfif not len(key)>
+		<cfif structKeyExists(application.stplugins.googlemaps.stKeys, cgi.HTTP_HOST)>
+			<cfset key = application.stplugins.googlemaps.stKeys[cgi.HTTP_HOST] />
+		<cfelse>
+			<cfset key = application.stplugins.googlemaps.apiKey />
+		</cfif>
+	</cfif>
 	
 	
 	<!--- if a user hasn't set map dimensions in the webtop, default them --->
