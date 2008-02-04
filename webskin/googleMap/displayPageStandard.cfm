@@ -27,14 +27,13 @@
 		<h1>#stObj.title#</h1>
 </cfoutput>
 		
-	<cfscript>
-	
-		if (arrayLen(stObj.aLocations))	//there are locations to plot, load the map using the user-defined webskin (displayMap)
-		{
-			writeOutput(getView(stObject=stObj,template="displayMap"));
-		}
-	
-	</cfscript>
+		
+		<cfif arrayLen(stobj.aLocations)>
+			<cfset html = getView(stobject="#stobj#", template="displayMap") />
+			
+			<cfoutput>#html#</cfoutput>
+		</cfif>
+
 
 <cfoutput>
 	</div>

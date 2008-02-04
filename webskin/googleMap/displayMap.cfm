@@ -19,7 +19,7 @@
 
 
 	<!--- the apiKey should be set in your project _serverSpecificRequestScope.cfm --->
-	<cfparam name="application.stplugins.googlemaps.apiKey" default="" type="string" />
+	<cfset application.stplugins.googlemaps = structNew() />
 	<cfparam name="application.stplugins.googlemaps.stKeys" default="#structNew()#" type="struct" />
 	
 	<cfparam name="key" default="" type="string" />
@@ -36,8 +36,10 @@
 	<cfif not len(key)>
 		<cfif structKeyExists(application.stplugins.googlemaps.stKeys, cgi.HTTP_HOST)>
 			<cfset key = application.stplugins.googlemaps.stKeys[cgi.HTTP_HOST] />
+		<cfelseif structKeyExists(application.config, "googlemaps")>
+			<cfset key = application.config.googleMaps.apiKey />
 		<cfelse>
-			<cfset key = application.stplugins.googlemaps.apiKey />
+			<cfset key = "" />		
 		</cfif>
 	</cfif>
 	
@@ -224,9 +226,8 @@
 				<cfif arrayLen(stobj.aLocations)>
 					
 					
-				
 					<cfloop list="#arrayToList(stObj.aLocations)#" index="i">
-	
+
 						<cfset counter = counter + 1 />							
 						<cfset stMapLocation = oMapLocation.getData(objectid=i) />
 						
