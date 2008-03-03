@@ -4,7 +4,7 @@
 	type properties
 	------------------------------------------------------------------------->	
 	<cfproperty ftSeq="1" ftFieldSet="Map Title" name="title" bLabel="true" type="string" hint="Title of the google map, used for Object Admin" required="true" ftLabel="Title" ftType="string" />
-	<cfproperty ftSeq="2" ftFieldSet="Locations" name="aLocations" type="array" hint="Different locations to plot on a map content object" ftLabel="Locations" ftType="array" ftJoin="googleMapLocation" ftAllowLibraryEdit="googleMapLocation" />
+	<cfproperty ftSeq="2" ftFieldSet="Locations" name="aLocations" type="array" hint="Different locations to plot on a map content object" ftLabel="Locations" ftType="array" ftJoin="googleMapLocation" ftAllowLibraryEdit="true" />
 	
 	<!--- map dimensions --->
 	<cfproperty ftSeq="10" ftFieldSet="Dimensions" name="width" type="integer" hint="Width of the map" ftRequired="false" ftLabel="Width" ftDefault="400" ftType="integer" ftValidation="required,validate-number" />
