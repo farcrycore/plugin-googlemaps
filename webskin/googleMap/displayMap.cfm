@@ -20,7 +20,7 @@
 
 	<!--- the apiKey should be set in your project _serverSpecificRequestScope.cfm --->
 	<cfset application.stplugins.googlemaps = structNew() />
-	<cfparam name="application.stplugins.googlemaps.stKeys" default="#structNew()#" type="struct" />
+	<cfparam name="application.config.googlemaps.apikey" default="#structNew()#" type="struct" />
 	
 	<cfparam name="key" default="" type="string" />
 	<cfparam name="mapControls" default="" type="string" />
