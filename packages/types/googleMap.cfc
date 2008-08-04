@@ -15,7 +15,7 @@
     You should have received a copy of the GNU Lesser General Public License
     along with FarCry Google Maps Plugin.  If not, see <http://www.gnu.org/licenses/>.
 --->
-<cfcomponent extends="farcry.core.packages.types.types" displayName="Google Map" hint="Google Map" bFriendly="1" bobjectbroker="true" objectbrokermaxobjects="1000">
+<cfcomponent extends="farcry.core.packages.types.types" displayName="Google Map" hint="Display Google maps on the website" bFriendly="1" bobjectbroker="true" objectbrokermaxobjects="1000">
 	
 	<!------------------------------------------------------------------------
 	type properties
