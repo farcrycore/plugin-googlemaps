@@ -190,7 +190,7 @@
 				        	 		else 
 				        	 		{
 										<cfif counter EQ 1>
-											<cfset sCenter = "map.setCenter(point, zoomLevel);" />
+											<cfset sCenter = "map.setCenter(new GLatLng(#stMapLocation.latLong#), zoomLevel);" />
 								       	</cfif>
 								       	map.setCenter(point, zoomLevel);
 								       	
@@ -255,7 +255,7 @@
 				        	 		else 
 				        	 		{
 										<cfif counter EQ 1>
-											<cfset sCenter = "map.setCenter(point, zoomLevel);" />
+											<cfset sCenter = "map.setCenter(new GLatLng(#stMapLocation.latLong#), zoomLevel);" />
 								       	</cfif>
 								       	map.setCenter(point, zoomLevel);
 								       	
