@@ -1,20 +1,4 @@
-<!--- @@Copyright: Daemon Pty Limited 2002-2008, http://www.daemon.com.au --->
-<!--- @@License:
-    This file is part of FarCry Google Maps Plugin.
-
-    FarCry Google Maps Plugin is free software: you can redistribute it and/or modify
-    it under the terms of the GNU Lesser General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-
-    FarCry Google Maps Plugin is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU Lesser General Public License for more details.
-
-    You should have received a copy of the GNU Lesser General Public License
-    along with FarCry Google Maps Plugin.  If not, see <http://www.gnu.org/licenses/>.
---->
+<cfsetting enablecfoutputonly="true">
 <!--- 
     Name			: displayPageStandard.cfm
     Author			: Matthew Bryant, Michael Sharman
@@ -26,8 +10,7 @@
 					: Map should either be implemented in a container or a tree type in your project
 					: First check to see if at least one location has been plotted for this map, if so then display map
  --->
-<cfsetting enablecfoutputonly="true">
-
+<!--- @@displayname: Standard Page display --->
 
 <cfoutput>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -44,13 +27,14 @@
 		<h1>#stObj.title#</h1>
 </cfoutput>
 		
-		
-		<cfif arrayLen(stobj.aLocations)>
-			<cfset html = getView(stobject="#stobj#", template="displayMap") />
-			
-			<cfoutput>#html#</cfoutput>
-		</cfif>
-
+	<cfscript>
+	
+		if (arrayLen(stObj.aLocations))	//there are locations to plot, load the map using the user-defined webskin (displayMap)
+		{
+			writeOutput(getView(stObject=stObj,template="displayMap"));
+		}
+	
+	</cfscript>
 
 <cfoutput>
 	</div>
@@ -58,6 +42,4 @@
 </body>
 </html>
 </cfoutput>
-
-
 <cfsetting enablecfoutputonly="false">
