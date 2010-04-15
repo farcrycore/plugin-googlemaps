@@ -199,7 +199,10 @@
 		function clickGMarker(i) {
 			GEvent.trigger(aGMarkers[i], "click");
 		}
-
+		function setCenter(longa,Lata, zoom){
+			map.setCenter(new GLatLng(longa, Lata), zoom);	
+		}
+		
 		// Creates a marker at the given point with the given info window onclick
 		function createMarker(GPoint, sHTML, GIcon, sTitle) {
 									
@@ -377,7 +380,7 @@
 					<!--- Alternate window method (just pans doesn't open info window) <li><a href="##" onclick="panToLatLong(#stMapLocation.LATLONG#)" title="Pan to #stMapLocation.TITLE#">#stMapLocation.TITLE#</a></li>--->
 					<cfoutput>
 						<li>
-							<a href="##" onclick="clickGMarker(#TMPLISTCOUNTER#); return false" title="Show #stMapLocation.TITLE#">#stMapLocation.TITLE#</a>
+							<a href="##" onclick="clickGMarker(#TMPLISTCOUNTER#); return false;" title="Show #stMapLocation.TITLE#">#stMapLocation.TITLE#</a>
 						</li>
 					</cfoutput>
 					<cfset TMPLISTCOUNTER = TMPLISTCOUNTER + 1 />
