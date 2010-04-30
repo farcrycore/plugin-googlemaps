@@ -151,7 +151,7 @@
 
 	<!--- We only want to place the google maps js file once in the header. This wll allow for 2 maps to be placed on the 1 page. --->
 	<skin:htmlhead id="googleMapsAPI">
-		<cfoutput><script src="http://maps.google.com/maps?file=api&amp;v=2.x&amp;key=#attributes.key#" type="text/javascript"></script></cfoutput>
+		<cfoutput><script src="http://maps.google.com/maps?file=api&amp;v=3.x&amp;key=#attributes.key#" type="text/javascript"></script></cfoutput>
 	</skin:htmlhead>
 
 	<!--- generate the map javascript and place the map javascript in the page header --->
