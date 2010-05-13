@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <webtop>
-	<section mergeType="merge" id="googlemaps_sec" label="Google Maps" labelType="value">
-		<subsection mergeType="merge" id="googlemapsSubSection" label="Google Maps" labelType="value">
-			<menu mergeType="merge" id="googlemapsMenu" label="Google Maps" labelType="value">
-				<menuitem mergeType="merge" id="googleMaps" label="Google Maps" link="/admin/customadmin.cfm?module=customlists/googleMap.cfm&amp;plugin=googlemaps" relatedtype="googleMap" />
-				<menuitem mergeType="merge" id="googleMapsLocation" label="Google Maps Location" link="/admin/customadmin.cfm?module=customlists/googleMapLocation.cfm&amp;plugin=googlemaps" relatedtype="googleMapLocation" />
+	<section mergeType="merge" id="googleMaps_sec" label="Google Maps" labelType="value">
+		<subsection mergeType="merge" id="googleMapsSubSection" label="Google Maps" labelType="value">
+			<menu mergeType="merge" id="googleMapsMenu" label="Google Maps" labelType="value">
+				<menuitem mergeType="merge" id="googleMaps" label="Google Maps" relatedType="googlemap" link="/admin/customadmin.cfm?module=customlists/googleMap.cfm&amp;plugin=googleMaps" />
+				<menuitem mergeType="merge" id="googleMapLocations" label="Google Map Locations" relatedType="googlemaplocation" link="/admin/customadmin.cfm?module=customlists/googleMapLocation.cfm&amp;plugin=googleMaps" />
 			</menu>
 		</subsection>
 	</section>
