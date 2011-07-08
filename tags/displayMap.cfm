@@ -18,9 +18,9 @@
 <cfimport taglib="/farcry/core/tags/webskin/" prefix="skin" />
 
 <cfif thistag.executionMode eq "Start">
-
+	
 	<!--- the apiKey should be set in your project _serverSpecificRequestScope.cfm --->
-	<cfparam name="application.stplugins.googleMaps.apiKey" default="" type="string" />
+	<cfparam name="application.stplugins.googleMaps.apiKey" default="#application.config.googleMaps.apiKey#" type="string" />
 	<cfparam name="attributes.key" default="#application.stplugins.googleMaps.apiKey#" type="string" />
 	<cfparam name="application.stplugins.googleMaps.stKeys" default="#structNew()#" type="struct" />
 	<cfparam name="attributes.stParam.mapType" default="G_MAP_TYPE" type="string" />
@@ -50,6 +50,8 @@
 			<cfset attributes.key = application.stplugins.googleMaps.apiKey />
 		</cfif>
 	</cfif>
+
+	<!---<cfdump var="#attributes.key#">--->
 
 	<!--- if a user hasn't set map dimensions in the webtop, default them --->
 	<cfif NOT IsNumeric(attributes.stParam.height)>
