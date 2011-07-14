@@ -15,7 +15,7 @@
 		<cfimport taglib="/farcry/core/tags/webskin/" prefix="skin" />
 		<skin:htmlHead id="googleMapsAPI">
 		<cfoutput>
-		<script src="http://maps.google.com/maps?file=api&amp;v=2.x&amp;key=#application.stplugins.googleMaps.apiKey#" type="text/javascript"></script></cfoutput>
+		<script src="http://maps.google.com/maps?file=api&amp;v=2.x&amp;key=#application.config.googleMaps.apiKey#" type="text/javascript"></script></cfoutput>
 		</skin:htmlHead>
 		
 		<skin:htmlHead id="googleMaps_geoAddressHandling">
@@ -66,7 +66,7 @@
 									var oFoundLocation = response.Placemark[0]; // getLocations may return more than one Placemark - just use the first one for the moment. 
 									var oPoint = new GLatLng(oFoundLocation.Point.coordinates[1], oFoundLocation.Point.coordinates[0]);
 									updateAddressField(sAddressFieldID, oFoundLocation.address); // update the address field with the full address as reported by the geocoder
-									if (slatLongFieldID != null) { // slatLongFieldID is optional
+									if (slatLongFieldID != 0) { // slatLongFieldID is optional
 										if(updateLatLngInput) { updateLatLngInput(slatLongFieldID, oPoint.lat(), oPoint.lng()); } // attempt to update an associated latLong field
 										if(panToLatLong) { panToLatLong(oPoint.lat() + ',' + oPoint.lng()); } // attempt to update an associated latLong map
 									}
@@ -104,7 +104,7 @@
 			<cfoutput>
 				<!--- NOTE: Unfortunately the link between the geoAddress and a the LatLong FT needs to be hard-coded this means any one type cannot have more than one latLong FT field --->
 				<input type="text" name="#arguments.fieldname#" id="#arguments.fieldname#" value="#HTMLEditFormat(arguments.stMetadata.value)#" size="50" class="#arguments.stMetadata.ftclass#" style="#arguments.stMetadata.ftstyle#" onchange="geocodeAddress(this.value, '#arguments.fieldname#', '#replace(ARGUMENTS.stObject.ObjectID,'-', '', 'ALL')#LatLong'); return false" />
-				<a href="##" onclick="geocodeAddress(document.getElementById('#arguments.fieldname#').value, '#arguments.fieldname#', '#replace(ARGUMENTS.stObject.ObjectID,'-', '', 'ALL')#LatLong'); return false">Geocode Address</a>
+				<a href="##" onclick="geocodeAddress(document.getElementById('#arguments.fieldname#').value, '#arguments.fieldname#', 'fc#replace(ARGUMENTS.stObject.ObjectID,'-', '', 'ALL')#LatLong'); return false">Geocode Address</a>
 				<div id="geocodemessage"><p class="subdued">Geocoded address will be updated to Google's fully qualified address format</p></div>
 			</cfoutput>
 		</cfsavecontent>

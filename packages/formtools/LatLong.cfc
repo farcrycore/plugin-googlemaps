@@ -14,7 +14,7 @@
 
 		<cfimport taglib="/farcry/core/tags/webskin/" prefix="skin" />
 		<skin:htmlHead id="googleMapsAPI">
-		<cfoutput><script src="http://maps.google.com/maps?file=api&amp;v=2.x&amp;key=#application.stplugins.googleMaps.apiKey#" type="text/javascript"></script>
+		<cfoutput><script src="http://maps.google.com/maps?file=api&amp;v=2.x&amp;key=#application.config.googleMaps.apiKey#" type="text/javascript"></script>
 		</cfoutput>
 		</skin:htmlHead>
 		
@@ -102,7 +102,7 @@
 		<cfsavecontent variable="html">
 			<cfoutput><input type="text" name="#arguments.fieldname#" id="#arguments.fieldname#" value="#HTMLEditFormat(arguments.stMetadata.value)#" class="#arguments.stMetadata.ftclass#" style="#arguments.stMetadata.ftstyle#" onchange="panToLatLong(this.value)" /></cfoutput>
 			
-			<cfif isDefined("application.stplugins.googleMaps.apiKey")>
+			<cfif isDefined("application.config.googleMaps.apiKey")>
 				<cfoutput>
 				<div id="map" style="width: 400px; height: 300px"></div>
 				<a href="##" onclick="findMarker(); return false">Find Marker</a>

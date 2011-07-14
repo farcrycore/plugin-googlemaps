@@ -20,9 +20,9 @@
 <cfif thistag.executionMode eq "Start">
 	
 	<!--- the apiKey should be set in your project _serverSpecificRequestScope.cfm --->
-	<cfparam name="application.stplugins.googleMaps.apiKey" default="#application.config.googleMaps.apiKey#" type="string" />
-	<cfparam name="attributes.key" default="#application.stplugins.googleMaps.apiKey#" type="string" />
-	<cfparam name="application.stplugins.googleMaps.stKeys" default="#structNew()#" type="struct" />
+	<cfparam name="application.config.googleMaps.apiKey" default="#application.config.googleMaps.apiKey#" type="string" />
+	<cfparam name="attributes.key" default="#application.config.googleMaps.apiKey#" type="string" />
+	<cfparam name="application.config.googleMaps.stKeys" default="#structNew()#" type="struct" />
 	<cfparam name="attributes.stParam.mapType" default="G_MAP_TYPE" type="string" />
 	<cfparam name="attributes.stParam.bDisplayInfoWindow" default="true" type="boolean" />
 	<cfparam name="attributes.stParam.displayDivId" default="map" type="string" /><!--- the name of the div to display the map in, override if 'map' is already being used by your project --->
@@ -44,10 +44,10 @@
 	<cfparam name="attributes.stParam" default="#structNew()#" />
 	
 	<cfif not len(attributes.key)>
-		<cfif structKeyExists(application.stplugins.googleMaps.stKeys, cgi.HTTP_HOST)>
-			<cfset attributes.key = application.stplugins.googleMaps.stKeys[cgi.HTTP_HOST] />
+		<cfif structKeyExists(application.config.googleMaps.stKeys, cgi.HTTP_HOST)>
+			<cfset attributes.key = application.config.googleMaps.stKeys[cgi.HTTP_HOST] />
 		<cfelse>
-			<cfset attributes.key = application.stplugins.googleMaps.apiKey />
+			<cfset attributes.key = application.config.googleMaps.apiKey />
 		</cfif>
 	</cfif>
 
