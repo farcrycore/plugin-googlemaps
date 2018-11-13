@@ -15,7 +15,7 @@
 		<cfimport taglib="/farcry/core/tags/webskin/" prefix="skin" />
 		<skin:htmlHead id="googleMapsAPI">
 		<cfoutput>
-		<script src="http://maps.google.com/maps?file=api&amp;v=2.x&amp;key=#application.config.googleMaps.apiKey#" type="text/javascript"></script></cfoutput>
+		<script src="//maps.google.com/maps?file=api&amp;v=2.x&amp;key=#application.config.googleMaps.apiKey#" type="text/javascript"></script></cfoutput>
 		</skin:htmlHead>
 		
 		<skin:htmlHead id="googleMaps_geoAddressHandling">

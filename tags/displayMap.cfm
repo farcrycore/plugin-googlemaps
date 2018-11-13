@@ -153,7 +153,7 @@
 
 	<!--- We only want to place the google maps js file once in the header. This wll allow for 2 maps to be placed on the 1 page. --->
 	<skin:htmlhead id="googleMapsAPI">
-		<cfoutput><script src="http://maps.google.com/maps?file=api&amp;v=3.x&amp;key=#attributes.key#" type="text/javascript"></script></cfoutput>
+		<cfoutput><script src="//maps.google.com/maps?file=api&amp;v=3.x&amp;key=#attributes.key#" type="text/javascript"></script></cfoutput>
 	</skin:htmlhead>
 
 	<!--- generate the map javascript and place the map javascript in the page header --->
@@ -211,7 +211,7 @@
 			<cfif attributes.stParam.bShowDirectionsLink><!--- Show links for Driving Directions (links to Google Maps session) --->
 				// The info window version with the "to here" form open
 	        aDirectionsToHTML[markerCounter] = sHTML + '<div class="gm-dir-from">Directions: <strong>To here</strong> - <a href="##" onclick="directionsFromHere(' + markerCounter + '); return false">From here</a>' +
-	           '<form  action="http://maps.google.com/maps" method="get" target="_blank">' +
+	           '<form  action="//maps.google.com/maps" method="get" target="_blank">' +
 	           '<label for="saddr">Start address<input type="text" size="30" name="saddr" id="saddr" value="" /></label>' +
 	           '<input value="Get Directions" type="submit" />' +
 	           '<input type="hidden" name="daddr" value="' + GPoint.lat() + ',' + GPoint.lng() + 
@@ -219,7 +219,7 @@
 	           
 	        // The info window version with the "to here" form open
 	        aDirectionsFromHTML[markerCounter] = sHTML + '<div class="gm-dir-to">Directions: <a href="##" onclick="directionsToHere(' + markerCounter + '); return false">To here</a> - <strong>From here</strong>' +
-	           '<form action="http://maps.google.com/maps" method="get" target="_blank">' +
+	           '<form action="//maps.google.com/maps" method="get" target="_blank">' +
 	           '<label for="daddr">End address<input type="text" size="30" name="daddr" id="daddr" value="" /></label>' +
 	           '<input value="Get Directions" type="submit" />' +
 	           '<input type="hidden" name="saddr" value="' + GPoint.lat() + ',' + GPoint.lng() +
